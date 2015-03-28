@@ -77,7 +77,7 @@ public final class DuelUtil {
     }
 
     private static boolean acceptChallenge(Player target, DuelInvitationKey key) {
-        return key != null && key.getPlayer().equals(target.getUniqueId());
+        return key != null && target.getUniqueId().equals(key.getPlayer());
     }
 
     public static void prepareDuel(Player player) {
