@@ -1,0 +1,22 @@
+version: "0.0.1"
+duel:
+  length: 120
+  heal-after: true
+  allow-dying: false
+arena:
+  radius: 20.0
+  allow-leaving: false
+challenge:
+  hold-shift-required: true
+  timeout: 30
+  duel-materials:
+  - DIAMOND_SWORD
+  - DIAMOND_AXE
+  - GOLD_SWORD
+  - GOLD_AXE
+  - IRON_SWORD
+  - IRON_AXE
+  - STONE_SWORD
+  - STONE_AXE
+  - WOOD_SWORD
+  - WOOD_AXE
