@@ -34,7 +34,7 @@ import java.util.logging.Level;
 
 public class SqliteStorage {
 
-    private static final String HN_DUELISTS_CREATE = "CREATE TABLE IF NOT EXISTS hn_duelists (duelist TEXT PRIMARY KEY, wins INTEGER NOT NULL, " +
+    private static final String HN_DUELHIST_CREATE = "CREATE TABLE IF NOT EXISTS hn_duelists (duelist TEXT PRIMARY KEY, wins INTEGER NOT NULL, " +
             "losses INTEGER NOT NULL, ties INTEGER NOT NULL)";
     private final PluginLogger logger;
     private boolean initialized;
@@ -58,7 +58,7 @@ public class SqliteStorage {
         }
 
         Statement statement = registry.register(connection.createStatement());
-        statement.executeUpdate(HN_DUELISTS_CREATE);
+        statement.executeUpdate(HN_DUELHIST_CREATE);
 
         registry.closeQuietly();
     }
@@ -98,7 +98,7 @@ public class SqliteStorage {
 
     public Table<UUID, DuelResult, Integer> loadDuelResults(UUID... uuids) {
         Table<UUID, DuelResult, Integer> table = HashBasedTable.create();
-        String selectStatement = "SELECT * FROM hn_duelists WHERE duelist=? LIMIT 1";
+        String selectStatement = "SELECT * FROM hn_duelhist WHERE duelist=? LIMIT 1";
         CloseableRegistry registry = new CloseableRegistry();
         try {
             Connection connection = registry.register(getConnection());
@@ -120,7 +120,7 @@ public class SqliteStorage {
 
     public Table<UUID, DuelResult, Integer> loadDuelResults() {
         Table<UUID, DuelResult, Integer> table = HashBasedTable.create();
-        String selectStatement = "SELECT * FROM hn_duelists";
+        String selectStatement = "SELECT * FROM hn_duelhist";
         CloseableRegistry registry = new CloseableRegistry();
         try {
             Connection connection = registry.register(getConnection());
@@ -141,7 +141,7 @@ public class SqliteStorage {
     }
 
     public void saveDuelResults(Table<UUID, DuelResult, Integer> table) {
-        String query = "REPLACE INTO hn_duelists (duelist, wins, losses, ties) VALUES (?,?,?,?)";
+        String query = "REPLACE INTO hn_duelhist (duelist, wins, losses, ties) VALUES (?,?,?,?)";
         CloseableRegistry registry = new CloseableRegistry();
         try {
             Connection c = registry.register(getConnection());

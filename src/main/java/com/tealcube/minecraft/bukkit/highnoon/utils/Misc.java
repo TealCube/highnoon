@@ -30,6 +30,10 @@ public final class Misc {
         // do nothing
     }
 
+    public static long currentTimeSeconds() {
+        return System.currentTimeMillis() / MILLIS_PER_SEC;
+    }
+
     public static boolean isPastDistance(Location a, Location b, double distance) {
         double dist = a.distanceSquared(b);
         return dist > (distance * distance);
@@ -68,6 +72,10 @@ public final class Misc {
         double Z = Math.cos(pitch);
 
         return new Vector(X, Z, Y);
+    }
+
+    public static boolean hasTimePassed(long point, long milliseconds) {
+        return System.currentTimeMillis() - point >= milliseconds;
     }
 
 }

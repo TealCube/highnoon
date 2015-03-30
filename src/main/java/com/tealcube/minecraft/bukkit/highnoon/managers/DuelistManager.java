@@ -1,74 +1,47 @@
-/*
- * This file is part of Tribes, licensed under the ISC License.
- *
- * Copyright (c) 2015 Richard Harrah
- *
- * Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted,
- * provided that the above copyright notice and this permission notice appear in all copies.
- *
- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
- * INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
- * THIS SOFTWARE.
- */
 package com.tealcube.minecraft.bukkit.highnoon.managers;
 
-import com.tealcube.minecraft.bukkit.highnoon.data.player.Duelist;
-import org.bukkit.entity.Player;
+import com.tealcube.minecraft.bukkit.highnoon.data.Duelist;
+import com.tealcube.minecraft.bukkit.kern.shade.google.common.base.Preconditions;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 public final class DuelistManager {
 
-    private static final Map<UUID, Duelist> DUELISTS = new HashMap<UUID, Duelist>();
+    private static final Map<UUID, Duelist> DUELIST_MAP = new HashMap<UUID, Duelist>();
 
     private DuelistManager() {
         // do nothing here
     }
 
-    public static Duelist addDuelist(UUID uuid) {
-        Duelist duelist = DUELISTS.get(uuid);
-
-        if (duelist != null) {
-            return duelist;
-        }
-
-        duelist = new Duelist(uuid);
-        DUELISTS.put(uuid, duelist);
+    public static Duelist createDuelist(UUID uuid) {
+        Preconditions.checkNotNull(uuid);
+        Duelist duelist = new Duelist(uuid);
+        DUELIST_MAP.put(uuid, duelist);
         return duelist;
     }
 
-    public static Duelist addDuelist(Player player) {
-        return addDuelist(player.getUniqueId());
-    }
-
-    public static void removeDuelist(Player player) {
-        DUELISTS.remove(player.getUniqueId());
-    }
-
-    public static void clear() {
-        DUELISTS.clear();
-    }
-
-    public static Set<UUID> getUniqueIds() {
-        return DUELISTS.keySet();
-    }
-
-    public static Collection<Duelist> getDuelists() {
-        return DUELISTS.values();
-    }
-
     public static Duelist getDuelist(UUID uuid) {
-        return DUELISTS.containsKey(uuid) ? DUELISTS.get(uuid) : addDuelist(uuid);
+        Preconditions.checkNotNull(uuid);
+        return hasDuelist(uuid) ? DUELIST_MAP.get(uuid) : createDuelist(uuid);
     }
 
-    public static Duelist getDuelist(Player player) {
-        return getDuelist(player.getUniqueId());
+    public static boolean hasDuelist(UUID uuid) {
+        Preconditions.checkNotNull(uuid);
+        return DUELIST_MAP.containsKey(uuid);
+    }
+
+    public static boolean removeDuelist(UUID uuid) {
+        Preconditions.checkNotNull(uuid);
+        DUELIST_MAP.remove(uuid);
+        return hasDuelist(uuid);
+    }
+
+    public static boolean addDuelist(Duelist duelist) {
+        Preconditions.checkNotNull(duelist);
+        DUELIST_MAP.put(duelist.getUniqueId(), duelist);
+        return hasDuelist(duelist.getUniqueId());
     }
 
 }

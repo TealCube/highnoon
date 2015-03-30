@@ -15,7 +15,7 @@
 package com.tealcube.minecraft.bukkit.highnoon.events;
 
 import com.tealcube.minecraft.bukkit.highnoon.data.DuelResult;
-import com.tealcube.minecraft.bukkit.highnoon.data.player.Duelist;
+import com.tealcube.minecraft.bukkit.highnoon.data.Duelist;
 
 public class DuelEndEvent extends HighNoonEvent {
 

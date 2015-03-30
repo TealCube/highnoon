@@ -20,12 +20,8 @@ import com.tealcube.minecraft.bukkit.facecore.shade.config.MasterConfiguration;
 import com.tealcube.minecraft.bukkit.facecore.shade.config.VersionedSmartConfiguration;
 import com.tealcube.minecraft.bukkit.facecore.shade.config.VersionedSmartYamlConfiguration;
 import com.tealcube.minecraft.bukkit.highnoon.data.DuelResult;
-import com.tealcube.minecraft.bukkit.highnoon.listeners.EntityListener;
-import com.tealcube.minecraft.bukkit.highnoon.listeners.PlayerListener;
 import com.tealcube.minecraft.bukkit.highnoon.storage.SqliteStorage;
 import com.tealcube.minecraft.bukkit.highnoon.managers.DuelHistoryManager;
-import com.tealcube.minecraft.bukkit.highnoon.tasks.DuelRangeTask;
-import com.tealcube.minecraft.bukkit.highnoon.utils.Misc;
 import com.tealcube.minecraft.bukkit.kern.shade.google.common.collect.Table;
 
 import java.io.File;
@@ -60,20 +56,15 @@ public class HighNoonPlugin extends FacePlugin {
         sqliteStorage = new SqliteStorage(this);
 
         for (Table.Cell<UUID, DuelResult, Integer> cell : sqliteStorage.loadDuelResults().cellSet()) {
-            DuelHistoryManager.setDuelResultAmount(cell.getRowKey(), cell.getColumnKey(), cell.getValue());
+            DuelHistoryManager.setResults(cell.getRowKey(), cell.getColumnKey(), cell.getValue());
         }
 
         settings = MasterConfiguration.loadFromFiles(configYAML);
-
-        getServer().getPluginManager().registerEvents(new EntityListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerListener(), this);
-
-        new DuelRangeTask().runTaskTimer(this, 0, 2 * Misc.TICKS_PER_SEC);
     }
 
     @Override
     public void disable() {
-        sqliteStorage.saveDuelResults(DuelHistoryManager.getDuelResults());
+        sqliteStorage.saveDuelResults(DuelHistoryManager.getDuelHistoryTable());
     }
 
     public MasterConfiguration getSettings() {
