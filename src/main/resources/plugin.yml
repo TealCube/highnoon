@@ -1,4 +1,4 @@
 name: @NAME@
 version: @VERSION@
 main: com.tealcube.minecraft.bukkit.highnoon.HighNoonPlugin
-depend: [Facecore]
+depend: [Facecore, Q]
