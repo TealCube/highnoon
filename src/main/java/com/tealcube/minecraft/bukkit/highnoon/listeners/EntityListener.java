@@ -100,7 +100,7 @@ public class EntityListener implements Listener {
 
             if (attacker instanceof Player) {
                 Player attackingPlayer = (Player) attacker;
-                if (DuelistUtil.areDueling(attackingPlayer, defendingPlayer)) {
+                if (!DuelistUtil.areDueling(attackingPlayer, defendingPlayer)) {
                     event.setCancelled(false);
                 }
             }
