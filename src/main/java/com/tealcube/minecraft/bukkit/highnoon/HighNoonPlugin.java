@@ -19,14 +19,13 @@ import com.tealcube.minecraft.bukkit.facecore.plugin.FacePlugin;
 import com.tealcube.minecraft.bukkit.facecore.shade.config.MasterConfiguration;
 import com.tealcube.minecraft.bukkit.facecore.shade.config.VersionedSmartConfiguration;
 import com.tealcube.minecraft.bukkit.facecore.shade.config.VersionedSmartYamlConfiguration;
-import com.tealcube.minecraft.bukkit.highnoon.data.DuelResult;
-import com.tealcube.minecraft.bukkit.highnoon.storage.SqliteStorage;
-import com.tealcube.minecraft.bukkit.highnoon.managers.DuelHistoryManager;
-import com.tealcube.minecraft.bukkit.kern.shade.google.common.collect.Table;
+import com.tealcube.minecraft.bukkit.highnoon.listeners.CombatListener;
+import com.tealcube.minecraft.bukkit.highnoon.tasks.DuelRangeTask;
+import com.tealcube.minecraft.bukkit.highnoon.utils.Misc;
+import info.faceland.q.QPlugin;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.UUID;
 import java.util.logging.Level;
 
 public class HighNoonPlugin extends FacePlugin {
@@ -35,7 +34,7 @@ public class HighNoonPlugin extends FacePlugin {
 
     private MasterConfiguration settings;
     private PluginLogger logger;
-    private SqliteStorage sqliteStorage;
+    private QPlugin qPlugin;
 
     public static HighNoonPlugin getInstance() {
         return instance;
@@ -45,6 +44,8 @@ public class HighNoonPlugin extends FacePlugin {
     public void enable() {
         instance = this;
 
+        qPlugin = (QPlugin) getServer().getPluginManager().getPlugin("Q");
+
         logger = new PluginLogger(this);
 
         VersionedSmartYamlConfiguration configYAML = new VersionedSmartYamlConfiguration(new File(getDataFolder(), "config.yml"),
@@ -53,18 +54,15 @@ public class HighNoonPlugin extends FacePlugin {
             debug("Updating config.yml");
         }
 
-        sqliteStorage = new SqliteStorage(this);
-
-        for (Table.Cell<UUID, DuelResult, Integer> cell : sqliteStorage.loadDuelResults().cellSet()) {
-            DuelHistoryManager.setResults(cell.getRowKey(), cell.getColumnKey(), cell.getValue());
-        }
+        getServer().getPluginManager().registerEvents(new CombatListener(), this);
 
         settings = MasterConfiguration.loadFromFiles(configYAML);
+
+        new DuelRangeTask().runTaskTimer(this, 0, 2 * Misc.TICKS_PER_SEC);
     }
 
     @Override
     public void disable() {
-        sqliteStorage.saveDuelResults(DuelHistoryManager.getDuelHistoryTable());
     }
 
     public MasterConfiguration getSettings() {
@@ -79,4 +77,7 @@ public class HighNoonPlugin extends FacePlugin {
         logger.log(level, Arrays.asList(messages));
     }
 
+    public QPlugin getQPlugin() {
+        return qPlugin;
+    }
 }

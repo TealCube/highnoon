@@ -14,25 +14,18 @@
  */
 package com.tealcube.minecraft.bukkit.highnoon.events;
 
-import com.tealcube.minecraft.bukkit.highnoon.data.DuelResult;
-import com.tealcube.minecraft.bukkit.highnoon.data.Duelist;
+import com.tealcube.minecraft.bukkit.highnoon.data.Duel;
 
 public class DuelEndEvent extends HighNoonEvent {
 
-    private final Duelist duelist;
-    private final DuelResult result;
+    private final Duel duel;
 
-    public DuelEndEvent(Duelist duelist, DuelResult result) {
-        this.duelist = duelist;
-        this.result = result;
+    public DuelEndEvent(Duel duelist) {
+        this.duel = duelist;
     }
 
-    public Duelist getDuelist() {
-        return duelist;
-    }
-
-    public DuelResult getResult() {
-        return result;
+    public Duel getDuel() {
+        return duel;
     }
 
 }

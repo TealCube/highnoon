@@ -12,11 +12,23 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
  * THIS SOFTWARE.
  */
-package com.tealcube.minecraft.bukkit.highnoon.data;
+package com.tealcube.minecraft.bukkit.highnoon.tasks;
 
-public enum DuelResult {
-    WIN,
-    LOSS,
-    TIE,
-    ABORTED
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+
+public final class HealPlayerTask extends BukkitRunnable {
+
+    private final Player player;
+
+    public HealPlayerTask(Player player) {
+        this.player = player;
+    }
+
+    @Override
+    public void run() {
+        this.player.setHealth(this.player.getMaxHealth());
+        this.player.setFireTicks(0);
+    }
+
 }
