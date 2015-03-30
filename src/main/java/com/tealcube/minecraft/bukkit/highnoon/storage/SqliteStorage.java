@@ -35,7 +35,7 @@ import java.util.logging.Level;
 public class SqliteStorage {
 
     private static final String HN_DUELISTS_CREATE = "CREATE TABLE IF NOT EXISTS hn_duelists (duelist TEXT PRIMARY KEY, wins INTEGER NOT NULL, " +
-            "losses NOT NULL, ties NOT NULL)";
+            "losses INTEGER NOT NULL, ties INTEGER NOT NULL)";
     private final PluginLogger logger;
     private boolean initialized;
     private HighNoonPlugin plugin;
