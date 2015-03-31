@@ -42,7 +42,8 @@ public final class CountdownTask extends BukkitRunnable {
                 return;
             }
 
-            MessageUtils.sendMessage(a, "<white>Time remaining: %time%", new String[][]{{"%time%", number + ""}});
+            MessageUtils.sendMessage(a, "<green>Duel starts in: <white>%time%", new String[][]{{"%time%", number + ""}});
+            MessageUtils.sendMessage(b, "<green>Duel starts in: <white>%time%", new String[][]{{"%time%", number + ""}});
 
             number--;
         }
