@@ -1,5 +1,5 @@
 /*
- * This file is part of Tribes, licensed under the ISC License.
+ * This file is part of HighNoon, licensed under the ISC License.
  *
  * Copyright (c) 2015 Richard Harrah
  *
@@ -23,6 +23,7 @@ import com.tealcube.minecraft.bukkit.highnoon.events.DuelEndEvent;
 import com.tealcube.minecraft.bukkit.highnoon.managers.DuelistManager;
 import com.tealcube.minecraft.bukkit.highnoon.tasks.CountdownTask;
 import com.tealcube.minecraft.bukkit.highnoon.tasks.HealPlayerTask;
+import com.tealcube.minecraft.bukkit.highnoon.utils.Formatter;
 import com.tealcube.minecraft.bukkit.highnoon.utils.Misc;
 import info.faceland.q.actions.options.Option;
 import info.faceland.q.actions.questions.Question;
@@ -100,6 +101,12 @@ public class InteractListener implements Listener {
             Question question = new Question(target.getUniqueId(), TextUtils.color(TextUtils.args(
                     "<white>%player%<green> has invited you to duel.", new String[][]{{"%player%", player.getDisplayName()}})), options);
             HighNoonPlugin.getInstance().getQPlugin().getQuestionManager().appendQuestion(question);
+            List<String> messages = Formatter.format(question);
+            for (String m : messages) {
+                target.sendMessage(m);
+            }
+            MessageUtils.sendMessage(entity, "<green>You sent a duel invite to <white>%name%<green>.",
+                    new String[][]{{"%name%", target.getDisplayName()}});
         }
     }
 
