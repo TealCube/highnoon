@@ -47,13 +47,11 @@ public class InteractListener implements Listener {
         Entity entity = event.getRightClicked();
 
         if (!player.isSneaking() && HighNoonPlugin.getInstance().getSettings().getBoolean("config.challenge.hold-shift-required")) {
-            HighNoonPlugin.getInstance().debug("not sneaking when required");
             return;
         }
 
         if (!HighNoonPlugin.getInstance().getSettings().getStringList("config.challenge.duel-materials").contains(player.getItemInHand().getType()
                 .name())) {
-            HighNoonPlugin.getInstance().debug("not using right material");
             return;
         }
 
@@ -126,11 +124,12 @@ public class InteractListener implements Listener {
         new HealPlayerTask(player).runTaskLater(HighNoonPlugin.getInstance(), 1);
         new HealPlayerTask(Bukkit.getPlayer(duelist.getTarget())).runTaskLater(HighNoonPlugin.getInstance(), 1);
 
+        MessageUtils.sendMessage(player, "<red>You lost your duel!");
+        MessageUtils.sendMessage(Bukkit.getPlayer(duelist.getTarget()), "<green>You won your duel!");
+
         DuelistManager.getDuelist(duelist.getTarget()).setTarget(null);
         duelist.setTarget(null);
 
-        MessageUtils.sendMessage(player, "<red>You lost your duel!");
-        MessageUtils.sendMessage(Bukkit.getPlayer(duelist.getTarget()), "<green>You won your duel!");
     }
 
 }
