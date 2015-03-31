@@ -58,6 +58,8 @@ public class CombatListener implements Listener {
             return;
         }
 
+        Player target = Bukkit.getPlayer(duelist.getTarget());
+
         event.setCancelled(true);
         player.setHealth(1);
         player.teleport(ArenaManager.getArena(player.getUniqueId()));
@@ -74,7 +76,7 @@ public class CombatListener implements Listener {
         duelist.setTarget(null);
 
         MessageUtils.sendMessage(player, "<red>You lost your duel!");
-        MessageUtils.sendMessage(Bukkit.getPlayer(duelist.getTarget()), "<green>You won your duel!");
+        MessageUtils.sendMessage(target, "<green>You won your duel!");
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

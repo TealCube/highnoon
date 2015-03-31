@@ -105,7 +105,7 @@ public class InteractListener implements Listener {
             for (String m : messages) {
                 target.sendMessage(m);
             }
-            MessageUtils.sendMessage(entity, "<green>You sent a duel invite to <white>%name%<green>.",
+            MessageUtils.sendMessage(player, "<green>You sent a duel invite to <white>%name%<green>.",
                     new String[][]{{"%name%", target.getDisplayName()}});
         }
     }
