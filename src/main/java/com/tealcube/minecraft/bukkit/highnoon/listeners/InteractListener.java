@@ -20,7 +20,6 @@ import com.tealcube.minecraft.bukkit.highnoon.HighNoonPlugin;
 import com.tealcube.minecraft.bukkit.highnoon.data.Duel;
 import com.tealcube.minecraft.bukkit.highnoon.data.Duelist;
 import com.tealcube.minecraft.bukkit.highnoon.events.DuelEndEvent;
-import com.tealcube.minecraft.bukkit.highnoon.managers.ArenaManager;
 import com.tealcube.minecraft.bukkit.highnoon.managers.DuelistManager;
 import com.tealcube.minecraft.bukkit.highnoon.tasks.CountdownTask;
 import com.tealcube.minecraft.bukkit.highnoon.tasks.HealPlayerTask;
@@ -28,7 +27,6 @@ import com.tealcube.minecraft.bukkit.highnoon.utils.Misc;
 import info.faceland.q.actions.options.Option;
 import info.faceland.q.actions.questions.Question;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -48,11 +46,13 @@ public class InteractListener implements Listener {
         Entity entity = event.getRightClicked();
 
         if (!player.isSneaking() && HighNoonPlugin.getInstance().getSettings().getBoolean("config.challenge.hold-shift-required")) {
+            HighNoonPlugin.getInstance().debug("not sneaking when required");
             return;
         }
 
         if (!HighNoonPlugin.getInstance().getSettings().getStringList("config.challenge.duel-materials").contains(player.getItemInHand().getType()
                 .name())) {
+            HighNoonPlugin.getInstance().debug("not using right material");
             return;
         }
 
