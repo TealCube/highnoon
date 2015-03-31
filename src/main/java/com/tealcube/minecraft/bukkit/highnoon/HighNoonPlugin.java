@@ -20,6 +20,7 @@ import com.tealcube.minecraft.bukkit.facecore.shade.config.MasterConfiguration;
 import com.tealcube.minecraft.bukkit.facecore.shade.config.VersionedSmartConfiguration;
 import com.tealcube.minecraft.bukkit.facecore.shade.config.VersionedSmartYamlConfiguration;
 import com.tealcube.minecraft.bukkit.highnoon.listeners.CombatListener;
+import com.tealcube.minecraft.bukkit.highnoon.listeners.InteractListener;
 import com.tealcube.minecraft.bukkit.highnoon.tasks.DuelRangeTask;
 import com.tealcube.minecraft.bukkit.highnoon.utils.Misc;
 import info.faceland.q.QPlugin;
@@ -55,6 +56,7 @@ public class HighNoonPlugin extends FacePlugin {
         }
 
         getServer().getPluginManager().registerEvents(new CombatListener(), this);
+        getServer().getPluginManager().registerEvents(new InteractListener(), this);
 
         settings = MasterConfiguration.loadFromFiles(configYAML);
 
