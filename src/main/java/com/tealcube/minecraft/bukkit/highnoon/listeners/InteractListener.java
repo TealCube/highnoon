@@ -134,9 +134,12 @@ public class InteractListener implements Listener {
         MessageUtils.sendMessage(player, "<red>You lost your duel!");
         MessageUtils.sendMessage(Bukkit.getPlayer(duelist.getTarget()), "<green>You won your duel!");
 
-        DuelistManager.getDuelist(duelist.getTarget()).setTarget(null);
+        Duelist target = DuelistManager.getDuelist(duelist.getTarget());
+        target.setTarget(null);
         duelist.setTarget(null);
-
+        duelist.getTask().cancel();
+        duelist.setTask(null);
+        target.setTask(null);
     }
 
 }

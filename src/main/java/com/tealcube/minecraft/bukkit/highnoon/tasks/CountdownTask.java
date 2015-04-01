@@ -15,13 +15,16 @@
 package com.tealcube.minecraft.bukkit.highnoon.tasks;
 
 import com.tealcube.minecraft.bukkit.facecore.utilities.MessageUtils;
+import com.tealcube.minecraft.bukkit.highnoon.HighNoonPlugin;
 import com.tealcube.minecraft.bukkit.highnoon.data.Duelist;
 import com.tealcube.minecraft.bukkit.highnoon.managers.ArenaManager;
 import com.tealcube.minecraft.bukkit.highnoon.managers.DuelistManager;
 import com.tealcube.minecraft.bukkit.highnoon.utils.Misc;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public final class CountdownTask extends BukkitRunnable {
 
@@ -58,6 +61,12 @@ public final class CountdownTask extends BukkitRunnable {
 
             ArenaManager.setArena(playerDuelist.getUniqueId(), midpoint);
             ArenaManager.setArena(targetDuelist.getUniqueId(), midpoint);
+
+            DuelEndTask duelEndTask = new DuelEndTask(playerDuelist, targetDuelist);
+            BukkitTask task = duelEndTask.runTaskLater(HighNoonPlugin.getInstance(), HighNoonPlugin.getInstance().getSettings().getInt("config.duel" +
+                    ".length") * Misc.TICKS_PER_SEC);
+            playerDuelist.setTask(task);
+            targetDuelist.setTask(task);
             this.cancel();
         }
     }

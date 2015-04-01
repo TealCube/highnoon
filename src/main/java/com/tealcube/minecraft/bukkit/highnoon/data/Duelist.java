@@ -14,7 +14,9 @@
  */
 package com.tealcube.minecraft.bukkit.highnoon.data;
 
+import com.tealcube.minecraft.bukkit.highnoon.tasks.DuelEndTask;
 import com.tealcube.minecraft.bukkit.kern.shade.google.common.base.Objects;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.UUID;
 
@@ -22,6 +24,7 @@ public class Duelist {
 
     private final UUID uniqueId;
     private UUID target;
+    private BukkitTask task;
 
     public Duelist(UUID uniqueId) {
         this.uniqueId = uniqueId;
@@ -56,4 +59,11 @@ public class Duelist {
         return Objects.hashCode(getUniqueId());
     }
 
+    public BukkitTask getTask() {
+        return task;
+    }
+
+    public void setTask(BukkitTask task) {
+        this.task = task;
+    }
 }

@@ -72,11 +72,15 @@ public class CombatListener implements Listener {
         new HealPlayerTask(player).runTaskLater(HighNoonPlugin.getInstance(), 1);
         new HealPlayerTask(Bukkit.getPlayer(duelist.getTarget())).runTaskLater(HighNoonPlugin.getInstance(), 1);
 
-        DuelistManager.getDuelist(duelist.getTarget()).setTarget(null);
-        duelist.setTarget(null);
-
         MessageUtils.sendMessage(player, "<red>You lost your duel!");
-        MessageUtils.sendMessage(target, "<green>You won your duel!");
+        MessageUtils.sendMessage(Bukkit.getPlayer(duelist.getTarget()), "<green>You won your duel!");
+
+        Duelist targetDuelist = DuelistManager.getDuelist(duelist.getTarget());
+        targetDuelist.setTarget(null);
+        duelist.setTarget(null);
+        duelist.getTask().cancel();
+        duelist.setTask(null);
+        targetDuelist.setTask(null);
     }
 
     @EventHandler(priority = EventPriority.HIGH)

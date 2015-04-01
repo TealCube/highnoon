@@ -1,7 +1,10 @@
-version: "0.0.1"
+version: "0.0.2"
+duel:
+  length: 120
 arena:
   radius: 20.0
 challenge:
+  cooldown: 30
   hold-shift-required: true
   duel-materials:
   - DIAMOND_SWORD
