@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DuelRangeTask extends BukkitRunnable {
+public final class DuelRangeTask extends BukkitRunnable {
 
     private Map<String, Integer> outOfArenaStrikes = new HashMap<String, Integer>();
 
