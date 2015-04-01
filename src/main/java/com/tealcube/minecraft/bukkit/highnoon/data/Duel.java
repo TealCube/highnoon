@@ -60,6 +60,10 @@ public class Duel {
         this.loser = loser;
     }
 
+    public boolean isTie() {
+        return winner == null && loser == null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
