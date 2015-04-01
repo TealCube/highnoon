@@ -14,7 +14,6 @@
  */
 package com.tealcube.minecraft.bukkit.highnoon.data;
 
-import com.tealcube.minecraft.bukkit.highnoon.tasks.DuelEndTask;
 import com.tealcube.minecraft.bukkit.kern.shade.google.common.base.Objects;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -25,6 +24,7 @@ public class Duelist {
     private final UUID uniqueId;
     private UUID target;
     private BukkitTask task;
+    private long lastDuelEnded;
 
     public Duelist(UUID uniqueId) {
         this.uniqueId = uniqueId;
@@ -66,4 +66,13 @@ public class Duelist {
     public void setTask(BukkitTask task) {
         this.task = task;
     }
+
+    public long getLastDuelEnded() {
+        return lastDuelEnded;
+    }
+
+    public void setLastDuelEnded(long lastDuelEnded) {
+        this.lastDuelEnded = lastDuelEnded;
+    }
+
 }

@@ -22,6 +22,7 @@ import com.tealcube.minecraft.bukkit.highnoon.events.DuelEndEvent;
 import com.tealcube.minecraft.bukkit.highnoon.managers.ArenaManager;
 import com.tealcube.minecraft.bukkit.highnoon.managers.DuelistManager;
 import com.tealcube.minecraft.bukkit.highnoon.tasks.HealPlayerTask;
+import com.tealcube.minecraft.bukkit.highnoon.utils.Misc;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -81,6 +82,8 @@ public class CombatListener implements Listener {
         duelist.getTask().cancel();
         duelist.setTask(null);
         targetDuelist.setTask(null);
+        duelist.setLastDuelEnded(Misc.currentTimeSeconds());
+        targetDuelist.setLastDuelEnded(Misc.currentTimeSeconds());
     }
 
     @EventHandler(priority = EventPriority.HIGH)

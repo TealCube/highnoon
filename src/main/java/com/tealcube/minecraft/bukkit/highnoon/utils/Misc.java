@@ -74,8 +74,8 @@ public final class Misc {
         return new Vector(X, Z, Y);
     }
 
-    public static boolean hasTimePassed(long point, long milliseconds) {
-        return System.currentTimeMillis() - point >= milliseconds;
+    public static boolean hasTimePassed(long point, long seconds) {
+        return currentTimeSeconds() - point >= seconds;
     }
 
 }

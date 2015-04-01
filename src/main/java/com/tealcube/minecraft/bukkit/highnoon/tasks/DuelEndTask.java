@@ -4,6 +4,7 @@ import com.tealcube.minecraft.bukkit.facecore.utilities.MessageUtils;
 import com.tealcube.minecraft.bukkit.highnoon.data.Duel;
 import com.tealcube.minecraft.bukkit.highnoon.data.Duelist;
 import com.tealcube.minecraft.bukkit.highnoon.events.DuelEndEvent;
+import com.tealcube.minecraft.bukkit.highnoon.utils.Misc;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -25,6 +26,9 @@ public final class DuelEndTask extends BukkitRunnable {
 
         a.setTarget(null);
         b.setTarget(null);
+
+        a.setLastDuelEnded(Misc.currentTimeSeconds());
+        b.setLastDuelEnded(Misc.currentTimeSeconds());
 
         Player playerA = Bukkit.getPlayer(a.getUniqueId());
         Player playerB = Bukkit.getPlayer(b.getUniqueId());

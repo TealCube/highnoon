@@ -79,6 +79,14 @@ public class InteractListener implements Listener {
                 return;
             }
 
+            final long cooldown = HighNoonPlugin.getInstance().getSettings().getLong("config.challenge.cooldown");
+
+            if (!Misc.hasTimePassed(playerDuelist.getLastDuelEnded(), cooldown)) {
+                MessageUtils.sendMessage(player, "<red>You have ended a duel too recently to duel again. Try again in <white>%amount%<red> seconds.",
+                        new String[][]{{"%amount%", (cooldown - (Misc.currentTimeSeconds() - playerDuelist.getLastDuelEnded())) + ""}});
+                return;
+            }
+
             List<Option> options = new ArrayList<Option>();
             options.add(new Option("accept", new Runnable() {
                 @Override
@@ -92,15 +100,27 @@ public class InteractListener implements Listener {
                         return;
                     }
 
+                    if (!Misc.hasTimePassed(targetDuelist.getLastDuelEnded(), cooldown)) {
+                        MessageUtils.sendMessage(target, "<red>You have ended a duel too recently to duel again. You can accept duels in " +
+                                "<white>%amount%<red> seconds. Have them challenge you again.",
+                                new String[][]{{"%amount%", (cooldown - (Misc.currentTimeSeconds() - targetDuelist.getLastDuelEnded())) + ""}});
+                        return;
+                    }
+
                     new CountdownTask(player, target, 3).runTaskTimer(HighNoonPlugin.getInstance(), 0, Misc.TICKS_PER_SEC);
 
-                    MessageUtils.sendMessage(player, "<white>%player%<green> accepted your duel request.");
+                    MessageUtils.sendMessage(target, "<green>You accepted <white>%player%<green>'s duel request.", new String[][]{{"%player%", target
+                            .getDisplayName()}});
+                    MessageUtils.sendMessage(player, "<white>%player%<green> accepted your duel request.", new String[][]{{"%player%", target.getDisplayName()}});
                 }
             }, "Accept the duel invitation"));
             options.add(new Option("decline", new Runnable() {
                 @Override
                 public void run() {
-                    MessageUtils.sendMessage(player, "<white>%player%<red> declined your duel request.");
+                    MessageUtils.sendMessage(target, "<red>You declined <white>%player%<red>'s duel request.", new String[][]{{"%player%", player
+                            .getDisplayName()}});
+                    MessageUtils.sendMessage(player, "<white>%player%<red> declined your duel request.", new String[][]{{"%player%", target
+                            .getDisplayName()}});
                 }
             }, "Decline the duel invitation"));
             Question question = new Question(target.getUniqueId(), TextUtils.color(TextUtils.args(
@@ -140,6 +160,8 @@ public class InteractListener implements Listener {
         duelist.getTask().cancel();
         duelist.setTask(null);
         target.setTask(null);
+        duelist.setLastDuelEnded(Misc.currentTimeSeconds());
+        target.setLastDuelEnded(Misc.currentTimeSeconds());
     }
 
 }
