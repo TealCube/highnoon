@@ -14,6 +14,7 @@
  */
 package com.tealcube.minecraft.bukkit.highnoon;
 
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.tealcube.minecraft.bukkit.facecore.logging.PluginLogger;
 import com.tealcube.minecraft.bukkit.facecore.plugin.FacePlugin;
 import com.tealcube.minecraft.bukkit.facecore.shade.config.MasterConfiguration;
@@ -36,6 +37,7 @@ public class HighNoonPlugin extends FacePlugin {
     private MasterConfiguration settings;
     private PluginLogger logger;
     private QPlugin qPlugin;
+    private WorldGuardPlugin worldGuardPlugin;
 
     public static HighNoonPlugin getInstance() {
         return instance;
@@ -46,6 +48,7 @@ public class HighNoonPlugin extends FacePlugin {
         instance = this;
 
         qPlugin = (QPlugin) getServer().getPluginManager().getPlugin("Q");
+        worldGuardPlugin = (WorldGuardPlugin) getServer().getPluginManager().getPlugin("WorldGuard");
 
         logger = new PluginLogger(this);
 
@@ -82,4 +85,9 @@ public class HighNoonPlugin extends FacePlugin {
     public QPlugin getQPlugin() {
         return qPlugin;
     }
+
+    public WorldGuardPlugin getWorldGuardPlugin() {
+        return worldGuardPlugin;
+    }
+
 }
