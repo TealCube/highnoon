@@ -79,7 +79,7 @@ public class CombatListener implements Listener {
         MessageUtils.sendMessage(target, "<green>You won your duel!");
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         if (event.getDamage() <= 0) {
             return;
