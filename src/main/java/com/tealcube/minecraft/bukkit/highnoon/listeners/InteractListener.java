@@ -25,6 +25,7 @@ import com.tealcube.minecraft.bukkit.highnoon.tasks.CountdownTask;
 import com.tealcube.minecraft.bukkit.highnoon.tasks.HealPlayerTask;
 import com.tealcube.minecraft.bukkit.highnoon.utils.Formatter;
 import com.tealcube.minecraft.bukkit.highnoon.utils.Misc;
+import com.tealcube.minecraft.bukkit.highnoon.utils.WGUtils;
 import info.faceland.q.actions.options.Option;
 import info.faceland.q.actions.questions.Question;
 import org.bukkit.Bukkit;
@@ -59,6 +60,12 @@ public class InteractListener implements Listener {
             event.setCancelled(true);
 
             final Player target = (Player) entity;
+
+            if (WGUtils.inRegion(player.getLocation()) || WGUtils.inRegion(target.getLocation()) || WGUtils.inRegion(Misc.calculateMidpoint(player
+                    .getLocation(), target.getLocation()))) {
+                MessageUtils.sendMessage(player, "<red>You cannot duel here.");
+                return;
+            }
 
             final Duelist playerDuelist = DuelistManager.getDuelist(player.getUniqueId());
             final Duelist targetDuelist = DuelistManager.getDuelist(target.getUniqueId());
