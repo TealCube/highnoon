@@ -21,6 +21,9 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.util.Vector;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public final class Misc {
 
     public static final long TICKS_PER_SEC = 20L;
@@ -76,6 +79,26 @@ public final class Misc {
 
     public static boolean hasTimePassed(long point, long seconds) {
         return currentTimeSeconds() - point >= seconds;
+    }
+
+    public static Set<Location> sphere(Location loc, Integer r, Integer h, Boolean hollow, Boolean sphere, int plus_y) {
+        Set<Location> circleblocks = new HashSet<Location>();
+        int cx = loc.getBlockX();
+        int cy = loc.getBlockY();
+        int cz = loc.getBlockZ();
+        for (int x = cx - r; x <= cx + r; x++) {
+            for (int z = cz - r; z <= cz + r; z++) {
+                for (int y = (sphere ? cy - r : cy); y < (sphere ? cy + r : cy + h); y++) {
+                    double dist = (cx - x) * (cx - x) + (cz - z) * (cz - z) + (sphere ? (cy - y) * (cy - y) : 0);
+                    if (dist < r * r && !(hollow && dist < (r - 1) * (r - 1))) {
+                        Location l = new Location(loc.getWorld(), x, y + plus_y, z);
+                        circleblocks.add(l);
+                    }
+                }
+            }
+        }
+
+        return circleblocks;
     }
 
 }

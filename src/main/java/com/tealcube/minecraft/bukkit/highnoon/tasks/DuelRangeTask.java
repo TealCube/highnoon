@@ -28,10 +28,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public final class DuelRangeTask extends BukkitRunnable {
 
@@ -85,32 +84,12 @@ public final class DuelRangeTask extends BukkitRunnable {
     }
 
     private void drawArenaCircle(Location loc, int r, Effect effect) {
-        List<Location> circleBlocks = sphere(loc, r, 1, true, false, 0);
+        Set<Location> circleBlocks = Misc.sphere(loc, r, 1, true, false, 0);
         World world = loc.getWorld();
 
         for (Location location : circleBlocks) {
             world.playEffect(location, effect, 1);
         }
-    }
-
-    public static List<Location> sphere(Location loc, Integer r, Integer h, Boolean hollow, Boolean sphere, int plus_y) {
-        List<Location> circleblocks = new ArrayList<Location>();
-        int cx = loc.getBlockX();
-        int cy = loc.getBlockY();
-        int cz = loc.getBlockZ();
-        for (int x = cx - r; x <= cx + r; x++) {
-            for (int z = cz - r; z <= cz + r; z++) {
-                for (int y = (sphere ? cy - r : cy); y < (sphere ? cy + r : cy + h); y++) {
-                    double dist = (cx - x) * (cx - x) + (cz - z) * (cz - z) + (sphere ? (cy - y) * (cy - y) : 0);
-                    if (dist < r * r && !(hollow && dist < (r - 1) * (r - 1))) {
-                        Location l = new Location(loc.getWorld(), x, y + plus_y, z);
-                        circleblocks.add(l);
-                    }
-                }
-            }
-        }
-
-        return circleblocks;
     }
 
 }

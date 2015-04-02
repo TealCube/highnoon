@@ -14,6 +14,8 @@
  */
 package com.tealcube.minecraft.bukkit.highnoon.listeners;
 
+import com.sk89q.worldedit.Vector;
+import com.sk89q.worldguard.bukkit.BukkitUtil;
 import com.tealcube.minecraft.bukkit.facecore.utilities.MessageUtils;
 import com.tealcube.minecraft.bukkit.facecore.utilities.TextUtils;
 import com.tealcube.minecraft.bukkit.highnoon.HighNoonPlugin;
@@ -29,6 +31,7 @@ import com.tealcube.minecraft.bukkit.highnoon.utils.WGUtils;
 import info.faceland.q.actions.options.Option;
 import info.faceland.q.actions.questions.Question;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -39,6 +42,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class InteractListener implements Listener {
 
@@ -61,10 +65,15 @@ public class InteractListener implements Listener {
 
             final Player target = (Player) entity;
 
-            if (WGUtils.inRegion(player.getLocation()) || WGUtils.inRegion(target.getLocation()) || WGUtils.inRegion(Misc.calculateMidpoint(player
-                    .getLocation(), target.getLocation()))) {
-                MessageUtils.sendMessage(player, "<red>You cannot duel here.");
-                return;
+            Location location = Misc.calculateMidpoint(player.getLocation(), target.getLocation());
+            int size = (int) HighNoonPlugin.getInstance().getSettings().getDouble("config.arena.radius");
+            Set<Location> arenaLocs = Misc.sphere(location, size, size, false, true, 0);
+
+            for (Location loc : arenaLocs) {
+                if (WGUtils.inRegion(loc)) {
+                    MessageUtils.sendMessage(player, "<red>You cannot duel here.");
+                    return;
+                }
             }
 
             final Duelist playerDuelist = DuelistManager.getDuelist(player.getUniqueId());
