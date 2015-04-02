@@ -14,8 +14,6 @@
  */
 package com.tealcube.minecraft.bukkit.highnoon.listeners;
 
-import com.sk89q.worldedit.Vector;
-import com.sk89q.worldguard.bukkit.BukkitUtil;
 import com.tealcube.minecraft.bukkit.facecore.utilities.MessageUtils;
 import com.tealcube.minecraft.bukkit.facecore.utilities.TextUtils;
 import com.tealcube.minecraft.bukkit.highnoon.HighNoonPlugin;
