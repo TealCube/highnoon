@@ -84,11 +84,14 @@ public final class DuelRangeTask extends BukkitRunnable {
     }
 
     private void drawArenaCircle(Location loc, int r, Effect effect) {
-        Set<Location> circleBlocks = Misc.sphere(loc, r, 1, true, false, 0);
+        Set<Location> circleBlocks = Misc.sphere(loc, r, 2, true, false, 0);
         World world = loc.getWorld();
 
+        int i = 0;
         for (Location location : circleBlocks) {
-            world.playEffect(location, effect, 1);
+            if (++i % 2 == 0) {
+                world.playEffect(location, effect, 1);
+            }
         }
     }
 
