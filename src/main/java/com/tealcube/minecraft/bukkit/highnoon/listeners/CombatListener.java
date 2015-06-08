@@ -55,7 +55,7 @@ public class CombatListener implements Listener {
         double playerHealth = player.getHealth();
         double damageAmount = event.getFinalDamage();
 
-        if ((playerHealth - damageAmount) > 0) {
+        if ((playerHealth - damageAmount) > 1) {
             return;
         }
 
@@ -71,10 +71,10 @@ public class CombatListener implements Listener {
         Bukkit.getPluginManager().callEvent(ev);
 
         new HealPlayerTask(player).runTaskLater(HighNoonPlugin.getInstance(), 1);
-        new HealPlayerTask(Bukkit.getPlayer(duelist.getTarget())).runTaskLater(HighNoonPlugin.getInstance(), 1);
+        new HealPlayerTask(target).runTaskLater(HighNoonPlugin.getInstance(), 1);
 
         MessageUtils.sendMessage(player, "<red>You lost your duel!");
-        MessageUtils.sendMessage(Bukkit.getPlayer(duelist.getTarget()), "<green>You won your duel!");
+        MessageUtils.sendMessage(target, "<green>You won your duel!");
 
         Duelist targetDuelist = DuelistManager.getDuelist(duelist.getTarget());
         targetDuelist.setTarget(null);
