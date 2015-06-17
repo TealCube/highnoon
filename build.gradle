@@ -29,8 +29,8 @@ repositories {
 }
 
 dependencies {
-    compile "com.tealcube.minecraft.bukkit:facecore-all:1.0.0-SNAPSHOT"
-    compile "com.tealcube.minecraft.bukkit:q:1.0.0-SNAPSHOT"
+    compile "com.tealcube.minecraft.bukkit:facecore-all:1.0.0"
+    compile "com.tealcube.minecraft.bukkit:q:1.0.0"
     compile "com.sk89q.worldedit:worldedit-bukkit:6.0.1"
     compile "com.sk89q:worldguard:6.0.0-SNAPSHOT"
 }
