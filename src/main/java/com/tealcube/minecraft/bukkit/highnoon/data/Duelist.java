@@ -22,7 +22,7 @@
  */
 package com.tealcube.minecraft.bukkit.highnoon.data;
 
-import com.tealcube.minecraft.bukkit.kern.shade.google.common.base.Objects;
+import com.tealcube.minecraft.bukkit.shade.google.common.base.Objects;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.UUID;

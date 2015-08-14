@@ -22,7 +22,7 @@
  */
 package com.tealcube.minecraft.bukkit.highnoon.managers;
 
-import com.tealcube.minecraft.bukkit.kern.shade.google.common.base.Preconditions;
+import com.tealcube.minecraft.bukkit.shade.google.common.base.Preconditions;
 import org.bukkit.Location;
 
 import java.util.HashMap;
