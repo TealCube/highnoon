@@ -23,6 +23,7 @@
 package com.tealcube.minecraft.bukkit.highnoon.tasks;
 
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public final class HealPlayerTask extends BukkitRunnable {
@@ -37,6 +38,7 @@ public final class HealPlayerTask extends BukkitRunnable {
     public void run() {
         this.player.setHealth(this.player.getMaxHealth());
         this.player.setFireTicks(0);
+        this.player.removePotionEffect(PotionEffectType.WITHER);
     }
 
 }
