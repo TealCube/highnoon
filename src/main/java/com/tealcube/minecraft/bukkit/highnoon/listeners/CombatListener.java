@@ -63,14 +63,14 @@ public class CombatListener implements Listener {
         double playerHealth = player.getHealth();
         double damageAmount = event.getFinalDamage();
 
-        if ((playerHealth - damageAmount) > 0.05) {
+        if ((playerHealth - damageAmount) > 0) {
             return;
         }
 
         Player target = Bukkit.getPlayer(duelist.getTarget());
 
         event.setCancelled(true);
-        player.setHealth(1);
+        player.setHealth(20);
         player.teleport(ArenaManager.getArena(player.getUniqueId()));
 
         DuelEndEvent ev = new DuelEndEvent(new Duel(duelist.getUniqueId(), duelist.getTarget()));
