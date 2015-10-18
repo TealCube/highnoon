@@ -63,7 +63,7 @@ public class CombatListener implements Listener {
         double playerHealth = player.getHealth();
         double damageAmount = event.getFinalDamage();
 
-        if ((playerHealth - damageAmount) > 1) {
+        if ((playerHealth - damageAmount) > 0.05) {
             return;
         }
 
